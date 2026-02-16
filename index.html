@@ -18,8 +18,17 @@
 <script src="script.js"></script>
 
 <style>
+:root{
+--primary:#0A84FF;
+--primary-dark:#001B44;
+--accent-gradient:linear-gradient(180deg,#1DA1FF,#001B44);
+}
+
 body{opacity:0;animation:fadeIn 1s ease forwards}
 @keyframes fadeIn{to{opacity:1}}
+
+.red9{background:#0A84FF!important}
+.red-text{color:#5AC8FF!important}
 
 .pop{
 position:fixed;
@@ -36,14 +45,13 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
   width:100%;
   overflow:hidden;
   margin-top:6px;
-  position:relative;
 }
 
 .lang-track{
   display:flex;
   gap:60px;
   width:max-content;
-  will-change:transform;
+  animation:slideLang 18s linear infinite;
 }
 
 .lang-track span{
@@ -54,7 +62,6 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
   cursor:pointer;
   transition:.2s;
   user-select:none;
-  white-space:nowrap;
 }
 
 .lang-track span:hover{
@@ -63,6 +70,14 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
   transform:scale(1.08);
 }
 
+.lang-slider:hover .lang-track{
+  animation-play-state:paused;
+}
+
+@keyframes slideLang{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
 
 </style>
 
