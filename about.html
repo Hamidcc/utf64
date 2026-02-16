@@ -61,68 +61,6 @@ filter:blur(1.2px);
 }
 </style>
 
-  <script>
-const now=()=>Date.now()
-
-const BIRTHDAY_2026=new Date("April 25, 2026 12:00:00 CDT").getTime()
-const START_HEIGHT_FT=5+10/12
-const TEEN_GROWTH_PER_YEAR_FT=0.8/12
-const HEIGHT_START=new Date("Jan 1, 2024").getTime()
-
-const BOTS_START=5
-const BOTS_PER_YEAR=3
-const SEASONS_START=3
-const SEASONS_PER_YEAR=1
-const GROWTH_EPOCH=new Date("Jan 1, 2025").getTime()
-
-const SLEEP_START=new Date("Jan 1, 2015").getTime()
-const MISSING_START=20
-const MISSING_PER_MONTH=12
-const DISTANCE_PER_DAY_KM=5.2
-
-function yearsSince(t){return (now()-t)/31557600000}
-function daysSince(t){return (now()-t)/86400000}
-
-function update(){
-const t=now()
-
-const days=(BIRTHDAY_2026-t)/86400000
-document.getElementById("birthday").textContent=
-"Birthday in "+days.toFixed(6)+" days"
-
-let height=START_HEIGHT_FT+(yearsSince(HEIGHT_START)*TEEN_GROWTH_PER_YEAR_FT)
-document.getElementById("height").textContent=
-height.toFixed(6)+" Feet tall"
-
-let bots=BOTS_START+(yearsSince(GROWTH_EPOCH)*BOTS_PER_YEAR)
-document.getElementById("bots").textContent=
-Math.floor(bots)+" Discord bots made"
-
-let seasons=SEASONS_START+(yearsSince(GROWTH_EPOCH)*SEASONS_PER_YEAR)
-document.getElementById("seasons").textContent=
-Math.floor(seasons)+" Minecraft Seasons Made"
-
-let neurons=(t/1000)*8.6e7
-document.getElementById("neurons").textContent=
-Math.floor(neurons).toLocaleString()+" neurons fired"
-
-let sleep=Math.floor(daysSince(SLEEP_START)*3)
-document.getElementById("sleep").textContent=
-sleep.toLocaleString()+" days sleep debt"
-
-let months=yearsSince(GROWTH_EPOCH)*12
-let missing=MISSING_START+(months*MISSING_PER_MONTH)
-document.getElementById("missing").textContent=
-Math.floor(missing)+" missing assignments"
-
-let distance=daysSince(SLEEP_START)*DISTANCE_PER_DAY_KM
-document.getElementById("distance").textContent=
-distance.toFixed(3)+" km walked"
-
-requestAnimationFrame(update)
-}
-update()
-</script>
 
 </head>
 
@@ -209,6 +147,67 @@ About me
 </div>
 
 </section>
+
+  <script>
+const now=()=>Date.now()
+
+const BIRTHDAY_2026=new Date("April 25, 2026 12:00:00 CDT").getTime()
+const START_HEIGHT_FT=5+10/12
+const TEEN_GROWTH_PER_YEAR_FT=0.8/12
+const HEIGHT_START=new Date("Jan 1, 2024").getTime()
+
+const BOTS_START=5
+const BOTS_PER_YEAR=3
+const SEASONS_START=3
+const SEASONS_PER_YEAR=1
+const GROWTH_EPOCH=new Date("Jan 1, 2025").getTime()
+
+const SLEEP_START=new Date("Jan 1, 2015").getTime()
+const MISSING_START=20
+const MISSING_PER_MONTH=12
+const DISTANCE_PER_DAY_KM=5.2
+
+function set(id,text){
+const el=document.getElementById(id)
+if(el) el.textContent=text
+}
+
+function yearsSince(t){return (now()-t)/31557600000}
+function daysSince(t){return (now()-t)/86400000}
+
+function update(){
+const t=now()
+
+const days=(BIRTHDAY_2026-t)/86400000
+set("birthday","Birthday in "+days.toFixed(6)+" days")
+
+let height=START_HEIGHT_FT+(yearsSince(HEIGHT_START)*TEEN_GROWTH_PER_YEAR_FT)
+set("height",height.toFixed(6)+" Feet tall")
+
+let bots=BOTS_START+(yearsSince(GROWTH_EPOCH)*BOTS_PER_YEAR)
+set("bots",Math.floor(bots)+" Discord bots made")
+
+let seasons=SEASONS_START+(yearsSince(GROWTH_EPOCH)*SEASONS_PER_YEAR)
+set("seasons",Math.floor(seasons)+" Minecraft Seasons Made")
+
+let neurons=(t/1000)*8.6e7
+set("neurons",Math.floor(neurons).toLocaleString()+" neurons fired")
+
+let sleep=Math.floor(daysSince(SLEEP_START)*3)
+set("sleep",sleep.toLocaleString()+" days sleep debt")
+
+let months=yearsSince(GROWTH_EPOCH)*12
+let missing=MISSING_START+(months*MISSING_PER_MONTH)
+set("missing",Math.floor(missing)+" missing assignments")
+
+let distance=daysSince(SLEEP_START)*DISTANCE_PER_DAY_KM
+set("distance",distance.toFixed(3)+" km walked")
+
+requestAnimationFrame(update)
+}
+
+window.addEventListener("DOMContentLoaded",update)
+</script>
 
 <script>
 async function loadAvatar(){
