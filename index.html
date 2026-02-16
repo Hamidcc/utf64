@@ -36,13 +36,14 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
   width:100%;
   overflow:hidden;
   margin-top:6px;
+  position:relative;
 }
 
 .lang-track{
   display:flex;
   gap:60px;
   width:max-content;
-  animation:slideLang 18s linear infinite;
+  will-change:transform;
 }
 
 .lang-track span{
@@ -53,6 +54,7 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
   cursor:pointer;
   transition:.2s;
   user-select:none;
+  white-space:nowrap;
 }
 
 .lang-track span:hover{
@@ -61,14 +63,6 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
   transform:scale(1.08);
 }
 
-.lang-slider:hover .lang-track{
-  animation-play-state:paused;
-}
-
-@keyframes slideLang{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
 
 </style>
 
@@ -194,14 +188,42 @@ const scale=avatar.matches(":hover")?1.18:1
 avatar.style.transform=`perspective(600px) rotateX(${currentX}deg) rotateY(${currentY}deg) scale(${scale})`
 })
 </script>
-  <script>
-document.querySelectorAll(".lang-track span").forEach(el=>{
-  el.addEventListener("click",()=>{
-    const url=el.getAttribute("data-link")
-    window.open(url,"_blank")
-  })
+<script>
+const track=document.getElementById("langTrack")
+const slider=document.querySelector(".lang-slider")
+
+track.querySelectorAll("span").forEach(el=>{
+  el.onclick=()=>window.open(el.dataset.link,"_blank")
 })
+
+function fillTrack(){
+  const neededWidth=slider.offsetWidth*2
+  while(track.scrollWidth<neededWidth){
+    track.innerHTML+=track.innerHTML
+  }
+}
+fillTrack()
+
+let pos=0
+let speed=0.35
+let paused=false
+
+slider.addEventListener("mouseenter",()=>paused=true)
+slider.addEventListener("mouseleave",()=>paused=false)
+
+function animate(){
+  if(!paused){
+    pos-=speed
+    if(Math.abs(pos)>=track.scrollWidth/2){
+      pos=0
+    }
+    track.style.transform=`translateX(${pos}px)`
+  }
+  requestAnimationFrame(animate)
+}
+animate()
 </script>
+
 
 
 </body>
