@@ -32,6 +32,44 @@ animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
 70%{transform:scale(1.6) translateY(-60px)}
 100%{transform:scale(1) translateY(-90px);opacity:0}
 }
+.lang-slider{
+  width:100%;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.lang-track{
+  display:flex;
+  gap:60px;
+  width:max-content;
+  animation:slideLang 18s linear infinite;
+}
+
+.lang-track span{
+  font-size:14px;
+  font-weight:700;
+  color:white;
+  opacity:.85;
+  cursor:pointer;
+  transition:.2s;
+  user-select:none;
+}
+
+.lang-track span:hover{
+  opacity:1;
+  text-decoration:underline;
+  transform:scale(1.08);
+}
+
+.lang-slider:hover .lang-track{
+  animation-play-state:paused;
+}
+
+@keyframes slideLang{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
 </style>
 
 <script>
@@ -69,9 +107,25 @@ display:inline-block;
 "> utf64 </h2>
 </div>
 
-<h5 class="center-align white-text small">
-PY      CSS      HTML      JS      LUAU      JAVA
-</h5>
+<div class="lang-slider">
+  <div class="lang-track" id="langTrack">
+    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
+    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
+    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
+    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
+    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
+    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
+
+    <!-- duplicate for infinite loop -->
+    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
+    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
+    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
+    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
+    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
+    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
+  </div>
+</div>
+
 
 <p class="center-align white-text small">
 Why settle for less when you can get the best?
@@ -140,6 +194,15 @@ const scale=avatar.matches(":hover")?1.18:1
 avatar.style.transform=`perspective(600px) rotateX(${currentX}deg) rotateY(${currentY}deg) scale(${scale})`
 })
 </script>
+  <script>
+document.querySelectorAll(".lang-track span").forEach(el=>{
+  el.addEventListener("click",()=>{
+    const url=el.getAttribute("data-link")
+    window.open(url,"_blank")
+  })
+})
+</script>
+
 
 </body>
 </html>
