@@ -203,41 +203,38 @@ const scale=avatar.matches(":hover")?1.18:1
 avatar.style.transform=`perspective(600px) rotateX(${currentX}deg) rotateY(${currentY}deg) scale(${scale})`
 })
 </script>
+  
 <script>
-const track=document.getElementById("langTrack")
-const slider=document.querySelector(".lang-slider")
-
-track.querySelectorAll("span").forEach(el=>{
-  el.onclick=()=>window.open(el.dataset.link,"_blank")
-})
-
-function fillTrack(){
-  const neededWidth=slider.offsetWidth*2
-  while(track.scrollWidth<neededWidth){
-    track.innerHTML+=track.innerHTML
-  }
+// Open Wikipedia on click
+function attachClick(el){
+  el.addEventListener("click",()=>{
+    window.open(el.getAttribute("data-link"), "_blank")
+  })
 }
-fillTrack()
 
-let pos=0
-let speed=0.35
-let paused=false
+// Initial attach
+document.querySelectorAll(".lang-track span").forEach(attachClick)
 
-slider.addEventListener("mouseenter",()=>paused=true)
-slider.addEventListener("mouseleave",()=>paused=false)
+const track = document.getElementById("langTrack")
 
-function animate(){
-  if(!paused){
-    pos-=speed
-    if(Math.abs(pos)>=track.scrollWidth/2){
-      pos=0
-    }
-    track.style.transform=`translateX(${pos}px)`
-  }
-  requestAnimationFrame(animate)
-}
-animate()
+// Duplicate every 20 seconds
+setInterval(()=>{
+  const spans = Array.from(track.querySelectorAll("span"))
+  const clones = spans.map(span=>{
+    const clone = span.cloneNode(true)
+    attachClick(clone)
+    track.appendChild(clone)
+    return clone
+  })
+
+  // Delete these clones after 40 seconds
+  setTimeout(()=>{
+    clones.forEach(c => track.removeChild(c))
+  }, 40000)
+}, 20000)
 </script>
+
+
 
 
 
