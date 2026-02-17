@@ -186,8 +186,8 @@ function daysSince(t){return (now()-t)/86400000}
 function update(){
 const t=now()
 
-const days=(BIRTHDAY_2026-t)/8640000000
-set("birthday","Birthday in "+days.toFixed(6)+" days")
+const days=(BIRTHDAY_2026-t)/86400000
+set("birthday","Birthday in "+days.toFixed(8)+" days")
 
 let height=START_HEIGHT_FT+(yearsSince(HEIGHT_START)*TEEN_GROWTH_PER_YEAR_FT)
 set("height",height.toFixed(10)+" Feet tall")
