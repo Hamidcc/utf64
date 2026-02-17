@@ -160,7 +160,7 @@ About me
 const now=()=>Date.now()
 
 const BIRTHDAY_2026=new Date("April 25, 2026 12:00:00 CDT").getTime()
-const START_HEIGHT_FT=5+10/12
+const START_HEIGHT_FT=5+11/12
 const TEEN_GROWTH_PER_YEAR_FT=0.8/12
 const HEIGHT_START=new Date("Jan 1, 2024").getTime()
 
@@ -186,11 +186,11 @@ function daysSince(t){return (now()-t)/86400000}
 function update(){
 const t=now()
 
-const days=(BIRTHDAY_2026-t)/86400000
+const days=(BIRTHDAY_2026-t)/8640000000
 set("birthday","Birthday in "+days.toFixed(6)+" days")
 
 let height=START_HEIGHT_FT+(yearsSince(HEIGHT_START)*TEEN_GROWTH_PER_YEAR_FT)
-set("height",height.toFixed(6)+" Feet tall")
+set("height",height.toFixed(10)+" Feet tall")
 
 let bots=BOTS_START+(yearsSince(GROWTH_EPOCH)*BOTS_PER_YEAR)
 set("bots",Math.floor(bots)+" Discord bots made")
@@ -209,7 +209,7 @@ let missing=MISSING_START+(months*MISSING_PER_MONTH)
 set("missing",Math.floor(missing)+" missing assignments")
 
 let distance=daysSince(SLEEP_START)*DISTANCE_PER_DAY_KM
-set("distance",distance.toFixed(3)+" km walked")
+set("distance",distance.toFixed(6)+" km walked")
 
 requestAnimationFrame(update)
 }
