@@ -1,571 +1,1144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#161736">
+    <title>404 — What are you doing here?</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap");
 
-<title>utf64 | Development Portfolio</title>
+        :root {
+            --background: #111329;
+            --background-light: #191c3f;
+            --card: rgba(24, 27, 61, 0.74);
+            --card-strong: rgba(28, 31, 73, 0.92);
+            --pink: #ff98d4;
+            --pink-light: #ffd3ec;
+            --purple: #bc9cff;
+            --blue: #8ccfff;
+            --cyan: #aef7f0;
+            --yellow: #ffe4a8;
+            --white: #f8f4ff;
+            --muted: #b7b8d9;
+            --border: rgba(255, 255, 255, 0.14);
+            --shadow: 0 30px 80px rgba(4, 5, 24, 0.52);
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#8965D6">
+        * {
+            box-sizing: border-box;
+        }
 
-<meta name="description" content="utf64 is a development portfolio showcasing previous work, projects, and engineering builds.">
-<meta name="keywords" content="utf64, development portfolio, projects, coding, engineering, unicode, utf8">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://utf64.netlify.app/">
+        html {
+            scroll-behavior: smooth;
+        }
 
-<link rel="icon" href="icon.png">
-<link rel="stylesheet" href="beer.css">
-<script src="script.js"></script>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--white);
+            background:
+                radial-gradient(circle at 10% 8%, rgba(255, 142, 210, 0.22), transparent 28rem),
+                radial-gradient(circle at 90% 18%, rgba(120, 192, 255, 0.24), transparent 30rem),
+                radial-gradient(circle at 45% 55%, rgba(182, 135, 255, 0.12), transparent 34rem),
+                linear-gradient(180deg, #181945 0%, #11132e 42%, #0d0f22 100%);
+            font-family: "Outfit", sans-serif;
+        }
 
-<style>
-body{opacity:0;animation:fadeIn 1s ease forwards}
-@keyframes fadeIn{to{opacity:1}}
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.26;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, black, transparent 80%);
+        }
 
-.pop{
-position:fixed;
-font-weight:900;
-pointer-events:none;
-animation:pop 900ms cubic-bezier(.2,.9,.3,1) forwards;
-}
-@keyframes pop{
-0%{transform:scale(.3) translateY(0);opacity:1}
-70%{transform:scale(1.6) translateY(-60px)}
-100%{transform:scale(1) translateY(-90px);opacity:0}
-}
-.lang-slider{
-  width:100%;
-  overflow:hidden;
-  margin-top:6px;
-}
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+        }
 
-.lang-track{
-  display:flex;
-  gap:60px;
-  width:max-content;
-  animation:slideLang 300s linear infinite;
-}
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-.lang-track span{
-  font-size:14px;
-  font-weight:700;
-  color:white;
-  opacity:.85;
-  cursor:pointer;
-  transition:.2s;
-  user-select:none;
-}
+        .cloud {
+            position: absolute;
+            width: 210px;
+            height: 54px;
+            border-radius: 18px;
+            opacity: 0.09;
+            background: var(--pink-light);
+            filter: blur(1px);
+            animation: cloud-drift 25s linear infinite;
+        }
 
-.lang-track span:hover{
-  opacity:1;
-  text-decoration:underline;
-  transform:scale(1.08);
-}
+        .cloud::before,
+        .cloud::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            border-radius: 50%;
+            background: inherit;
+        }
 
-.lang-slider:hover .lang-track{
-  animation-play-state:paused;
-}
+        .cloud::before {
+            width: 78px;
+            height: 78px;
+            left: 34px;
+        }
 
-@keyframes slideLang{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
+        .cloud::after {
+            width: 105px;
+            height: 105px;
+            right: 26px;
+        }
 
-</style>
+        .cloud-one {
+            top: 14%;
+            left: -260px;
+        }
 
-<script>
-const words=[
-"code","utf","development","unicode","utf64",
-"67","utf8","cyclone","affordable"
-]
+        .cloud-two {
+            top: 46%;
+            left: -400px;
+            animation-delay: -13s;
+            animation-duration: 33s;
+            background: var(--blue);
+        }
 
-document.addEventListener("click",e=>{
-const el=document.createElement("div")
-el.className="pop"
-el.textContent=words[Math.floor(Math.random()*words.length)]
-el.style.left=e.clientX+"px"
-el.style.top=e.clientY+"px"
-document.body.appendChild(el)
-setTimeout(()=>el.remove(),900)
-})
-</script>
+        .cloud-three {
+            top: 78%;
+            left: -340px;
+            animation-delay: -7s;
+            animation-duration: 29s;
+            background: var(--purple);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.17;
+        }
+
+        .orb-one {
+            width: 340px;
+            height: 340px;
+            top: 9%;
+            right: -100px;
+            background: var(--pink);
+        }
+
+        .orb-two {
+            width: 400px;
+            height: 400px;
+            top: 55%;
+            left: -180px;
+            background: var(--blue);
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 1px;
+            background: white;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+            animation: twinkle 2.8s ease-in-out infinite;
+        }
+
+        .page {
+            width: min(1120px, calc(100% - 38px));
+            margin: 0 auto;
+        }
+
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: grid;
+            align-items: center;
+            padding: 90px 0 110px;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+            align-items: center;
+            gap: 62px;
+        }
+
+        .error-tag {
+            width: fit-content;
+            margin-bottom: 25px;
+            padding: 9px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+            color: var(--pink-light);
+            background: rgba(255, 255, 255, 0.06);
+            font-family: "DM Mono", monospace;
+            font-size: 0.77rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        h1 {
+            max-width: 740px;
+            margin: 0;
+            font-size: clamp(4rem, 9vw, 8.6rem);
+            line-height: 0.87;
+            letter-spacing: -0.075em;
+            text-wrap: balance;
+        }
+
+        h1 span {
+            display: block;
+            color: transparent;
+            background: linear-gradient(110deg, var(--white), var(--pink-light) 38%, var(--blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+            filter: drop-shadow(0 8px 20px rgba(205, 159, 255, 0.14));
+        }
+
+        .hero-copy {
+            max-width: 610px;
+            margin: 31px 0 0;
+            color: var(--muted);
+            font-family: "DM Mono", monospace;
+            font-size: clamp(0.9rem, 1.6vw, 1.02rem);
+            line-height: 1.85;
+        }
+
+        .scroll-note {
+            position: absolute;
+            left: 0;
+            bottom: 45px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: rgba(255, 255, 255, 0.47);
+            font-family: "DM Mono", monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 48px;
+            height: 1px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .scroll-line::after {
+            content: "";
+            display: block;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--pink), var(--blue));
+            animation: scroll-line 1.7s ease-in-out infinite;
+        }
+
+        .minecraft-scene {
+            position: relative;
+            min-height: 550px;
+            perspective: 1000px;
+        }
+
+        .scene-glow {
+            position: absolute;
+            inset: 18% 0 10%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(237, 179, 255, 0.28), transparent 64%);
+            filter: blur(18px);
+        }
+
+        .mace {
+            position: absolute;
+            z-index: 4;
+            top: 52px;
+            left: 50%;
+            width: 125px;
+            height: 420px;
+            transform: translateX(-50%) rotate(39deg);
+            animation: mace-float 5.5s ease-in-out infinite;
+            filter: drop-shadow(0 30px 24px rgba(4, 6, 28, 0.55));
+        }
+
+        .mace-head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 118px;
+            height: 112px;
+            transform: translateX(-50%) rotate(45deg);
+            border: 4px solid rgba(255, 255, 255, 0.24);
+            border-radius: 18px;
+            background:
+                linear-gradient(135deg, transparent 28%, rgba(255, 255, 255, 0.22) 29% 41%, transparent 42%),
+                linear-gradient(315deg, #d8d9ef, #797f9e 58%, #4c506b);
+            box-shadow:
+                inset 12px 12px rgba(255, 255, 255, 0.12),
+                inset -16px -16px rgba(36, 39, 63, 0.27);
+        }
+
+        .mace-head::before,
+        .mace-head::after {
+            content: "";
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            border: 3px solid rgba(255, 255, 255, 0.18);
+            background: linear-gradient(135deg, #b4bad6, #5e637f);
+        }
+
+        .mace-head::before {
+            top: -15px;
+            left: -15px;
+        }
+
+        .mace-head::after {
+            right: -15px;
+            bottom: -15px;
+        }
+
+        .mace-neck {
+            position: absolute;
+            top: 94px;
+            left: 50%;
+            width: 36px;
+            height: 52px;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #606783, #b8bdd5 48%, #555b78);
+            clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+        }
+
+        .mace-handle {
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            width: 34px;
+            height: 265px;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.16) 0 11px,
+                    transparent 11px 23px
+                ),
+                linear-gradient(90deg, #473b73, #8573c1 48%, #342b5a);
+            box-shadow:
+                inset 5px 0 rgba(255, 255, 255, 0.1),
+                inset -6px 0 rgba(12, 10, 32, 0.22);
+        }
+
+        .mace-grip {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 58px;
+            height: 45px;
+            transform: translateX(-50%);
+            border-radius: 8px;
+            background: linear-gradient(135deg, #9582d5, #413566);
+            box-shadow: inset 5px 5px rgba(255, 255, 255, 0.12);
+        }
+
+        .wind-charge {
+            position: absolute;
+            z-index: 3;
+            width: 86px;
+            aspect-ratio: 1;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 35% 32%, white 0 5%, transparent 6%),
+                radial-gradient(circle, rgba(216, 252, 255, 0.98) 0 12%, rgba(130, 214, 255, 0.82) 13% 27%, transparent 28%),
+                conic-gradient(from 10deg, transparent, rgba(169, 231, 255, 0.85), transparent 30%, rgba(239, 211, 255, 0.8), transparent 65%, rgba(143, 225, 255, 0.8));
+            box-shadow:
+                0 0 25px rgba(155, 226, 255, 0.66),
+                inset 0 0 22px white;
+            animation: charge-spin 7s linear infinite;
+        }
+
+        .wind-charge::before,
+        .wind-charge::after {
+            content: "";
+            position: absolute;
+            inset: -18px;
+            border: 2px solid rgba(183, 228, 255, 0.36);
+            border-radius: 50%;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .wind-charge::after {
+            inset: -31px;
+            border-color: rgba(255, 180, 225, 0.27);
+            border-top-color: transparent;
+            transform: rotate(55deg);
+        }
+
+        .charge-one {
+            top: 63px;
+            right: 12px;
+        }
+
+        .charge-two {
+            right: 5px;
+            bottom: 82px;
+            width: 62px;
+            animation-direction: reverse;
+        }
+
+        .charge-three {
+            bottom: 34px;
+            left: 20px;
+            width: 74px;
+        }
+
+        .pixel-spark {
+            position: absolute;
+            z-index: 5;
+            width: 9px;
+            height: 9px;
+            transform: rotate(45deg);
+            background: var(--pink-light);
+            box-shadow: 0 0 13px var(--pink);
+            animation: sparkle 2.4s ease-in-out infinite;
+        }
+
+        .spark-one {
+            top: 60px;
+            left: 22%;
+        }
+
+        .spark-two {
+            top: 54%;
+            right: 14%;
+            animation-delay: -0.7s;
+            background: var(--cyan);
+            box-shadow: 0 0 13px var(--cyan);
+        }
+
+        .spark-three {
+            bottom: 18%;
+            left: 19%;
+            animation-delay: -1.3s;
+            background: var(--yellow);
+            box-shadow: 0 0 13px var(--yellow);
+        }
+
+        main {
+            padding-bottom: 120px;
+        }
+
+        .section {
+            position: relative;
+            margin-bottom: 26px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.055), transparent 42%),
+                var(--card);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            top: -100px;
+            right: -60px;
+            background: var(--section-accent, var(--pink));
+            opacity: 0.12;
+            filter: blur(35px);
+        }
+
+        .section-inner {
+            position: relative;
+            z-index: 1;
+            padding: clamp(30px, 5vw, 58px);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .section-icon {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            flex: 0 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 13px;
+            color: var(--section-accent, var(--pink));
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .section-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: clamp(1.75rem, 4vw, 2.7rem);
+            letter-spacing: -0.04em;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(240px, 0.7fr);
+            gap: 42px;
+        }
+
+        .about-copy {
+            margin: 0;
+            color: #d7d7eb;
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            line-height: 1.75;
+        }
+
+        .about-copy strong {
+            color: var(--pink-light);
+            font-weight: 600;
+        }
+
+        .mini-card {
+            align-self: stretch;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 20px;
+            background: rgba(7, 9, 29, 0.24);
+            font-family: "DM Mono", monospace;
+        }
+
+        .mini-label {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--blue);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .mini-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .interest {
+            min-height: 152px;
+            padding: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            background: rgba(7, 9, 29, 0.24);
+            transition:
+                transform 180ms ease,
+                border-color 180ms ease,
+                background 180ms ease;
+        }
+
+        .interest:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.23);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .interest-symbol {
+            display: inline-flex;
+            margin-bottom: 20px;
+            font-family: "DM Mono", monospace;
+            font-size: 1.55rem;
+            color: var(--interest-color, var(--pink));
+            filter: drop-shadow(0 0 12px currentColor);
+        }
+
+        .interest h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .interest p {
+            margin: 0;
+            color: var(--muted);
+            font-family: "DM Mono", monospace;
+            font-size: 0.75rem;
+            line-height: 1.65;
+        }
+
+        .creator-panel {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 290px;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .creator-copy p {
+            max-width: 650px;
+            margin: 15px 0 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
+
+        .creator-visual {
+            position: relative;
+            min-height: 250px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 23px;
+            background:
+                radial-gradient(circle at 55% 40%, rgba(255, 167, 218, 0.2), transparent 45%),
+                linear-gradient(145deg, rgba(150, 194, 255, 0.08), rgba(255, 157, 213, 0.05));
+        }
+
+        .creator-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 112px;
+            height: 126px;
+            transform: translate(-50%, -44%);
+            border: 4px solid rgba(255, 255, 255, 0.28);
+            border-radius: 15px;
+            background:
+                linear-gradient(90deg, transparent 22%, #31304b 23% 31%, transparent 32% 67%, #31304b 68% 76%, transparent 77%) 0 51% / 100% 22% no-repeat,
+                linear-gradient(90deg, transparent 40%, #dc829f 41% 60%, transparent 61%) 0 78% / 100% 10% no-repeat,
+                linear-gradient(135deg, #f7e8df, #dfc8cd);
+            box-shadow:
+                inset 9px 9px rgba(255, 255, 255, 0.13),
+                0 21px 35px rgba(5, 6, 22, 0.34);
+        }
+
+        .creator-hat {
+            position: absolute;
+            top: 26px;
+            left: 50%;
+            width: 144px;
+            height: 49px;
+            transform: translateX(-50%) rotate(-3deg);
+            border-radius: 13px 13px 7px 7px;
+            background: #282b45;
+            box-shadow: 0 8px 15px rgba(5, 6, 22, 0.25);
+        }
+
+        .creator-hat::after {
+            content: "WEMMBU";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: var(--pink-light);
+            font-family: "DM Mono", monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+        }
+
+        .creator-ring {
+            position: absolute;
+            inset: 27px;
+            border: 1px dashed rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            animation: charge-spin 16s linear infinite;
+        }
+
+        .tech-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 13px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            background: rgba(7, 9, 29, 0.25);
+            color: #e6e6f5;
+            font-family: "DM Mono", monospace;
+            font-size: 0.78rem;
+        }
+
+        .tech-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 3px;
+            background: var(--dot-color, var(--pink));
+            box-shadow: 0 0 12px var(--dot-color, var(--pink));
+        }
+
+        footer {
+            padding: 60px 0 84px;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: "DM Mono", monospace;
+            font-size: 0.72rem;
+            text-align: center;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                opacity 700ms ease,
+                transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes cloud-drift {
+            to {
+                transform: translateX(calc(100vw + 650px));
+            }
+        }
+
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.24;
+                transform: scale(0.7);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+        }
+
+        @keyframes mace-float {
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(39deg) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(35deg) translateY(-18px);
+            }
+        }
+
+        @keyframes charge-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes sparkle {
+            0%,
+            100% {
+                transform: rotate(45deg) scale(0.65);
+                opacity: 0.35;
+            }
+
+            50% {
+                transform: rotate(45deg) scale(1.35);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scroll-line {
+            from {
+                transform: translateX(-110%);
+            }
+
+            to {
+                transform: translateX(210%);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                padding-top: 110px;
+            }
+
+            .hero-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .minecraft-scene {
+                min-height: 470px;
+                transform: scale(0.9);
+            }
+
+            .scroll-note {
+                display: none;
+            }
+
+            .about-grid,
+            .creator-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .creator-visual {
+                min-height: 280px;
+            }
+
+            .interests-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 620px) {
+            .page {
+                width: min(100% - 24px, 1120px);
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 90px 0 60px;
+            }
+
+            h1 {
+                font-size: clamp(3.55rem, 17vw, 5rem);
+            }
+
+            .hero-copy {
+                font-size: 0.82rem;
+            }
+
+            .minecraft-scene {
+                min-height: 390px;
+                margin: -40px -25px 0;
+                transform: scale(0.73);
+            }
+
+            .section {
+                border-radius: 21px;
+            }
+
+            .section-inner {
+                padding: 26px 22px;
+            }
+
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interest {
+                min-height: auto;
+            }
+
+            .creator-panel {
+                gap: 25px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
+<body>
+    <div class="ambient">
+        <div class="cloud cloud-one"></div>
+        <div class="cloud cloud-two"></div>
+        <div class="cloud cloud-three"></div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+    </div>
 
-<body class="middle-align center-align counting-background">
+    <div class="stars" id="stars"></div>
 
-<section class="center-align margin">
+    <div class="page">
+        <header class="hero">
+            <div class="hero-layout">
+                <div>
+                    <div class="error-tag">Error 404 · Lost chunk</div>
 
-<div class="center center-align middle-align flex-wrap">
-<img id="avatar" class="counting-icon" src="icon.png">
-<h2 class="red-text no-margin" style="
-font-weight:900;
-background:var(--accent-gradient);
--webkit-background-clip:text;
-background-clip:text;
--webkit-text-fill-color:transparent;
-color:transparent;
-display:inline-block;
-"> utf64 </h2>
-</div>
-<br>
-<div class="lang-slider">
-  <div class="lang-track" id="langTrack">
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
-    <span data-link="https://en.wikipedia.org/wiki/Python_(programming_language)">PY</span>
-    <span data-link="https://en.wikipedia.org/wiki/CSS">CSS</span>
-    <span data-link="https://en.wikipedia.org/wiki/HTML">HTML</span>
-    <span data-link="https://en.wikipedia.org/wiki/JavaScript">JS</span>
-    <span data-link="https://en.wikipedia.org/wiki/Luau">LUAU</span>
-    <span data-link="https://en.wikipedia.org/wiki/Java_(programming_language)">JAVA</span>
+                    <h1>
+                        <span>What are you</span>
+                        <span>doing here?</span>
+                    </h1>
 
-  </div>
-</div>
+                    <p class="hero-copy">
+                        You wandered far enough to find a page that does not exist.
+                        There is nothing useful up here, but the rest of the page survived.
+                    </p>
+                </div>
 
-<br>
-<p class="center-align white-text small">
-Why settle for less when you can get the best?
-</p>
+                <div class="minecraft-scene" aria-hidden="true">
+                    <div class="scene-glow"></div>
 
-<div class="large-margin">
+                    <div class="mace">
+                        <div class="mace-head"></div>
+                        <div class="mace-neck"></div>
+                        <div class="mace-handle"></div>
+                        <div class="mace-grip"></div>
+                    </div>
 
-<a href="/projects">
-<button class="red9 white-text tiny-margin wave">
-<i>code</i>
-<span>Projects</span>
-</button>
-</a>
+                    <div class="wind-charge charge-one"></div>
+                    <div class="wind-charge charge-two"></div>
+                    <div class="wind-charge charge-three"></div>
 
-<a href="/about">
-<button class="red9 white-text tiny-margin wave">
-<i>person</i>
-<span>About</span>
-</button>
-</a>
+                    <div class="pixel-spark spark-one"></div>
+                    <div class="pixel-spark spark-two"></div>
+                    <div class="pixel-spark spark-three"></div>
+                </div>
+            </div>
 
-<a href="/contact">
-<button class="red9 white-text tiny-margin wave">
-<i>mail</i>
-<span>Contact</span>
-</button>
-</a>
+            <div class="scroll-note">
+                <div class="scroll-line"></div>
+                Keep scrolling
+            </div>
+        </header>
 
-</div>
+        <main>
+            <section class="section reveal" style="--section-accent: var(--pink);">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <div class="section-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <circle cx="12" cy="8" r="4"></circle>
+                                <path d="M4.8 20c.7-4 3-6 7.2-6s6.5 2 7.2 6"></path>
+                            </svg>
+                        </div>
+                        <h2>About me</h2>
+                    </div>
 
-</section>
+                    <div class="about-grid">
+                        <p class="about-copy">
+                            I make things for the internet, mostly involving
+                            <strong>Minecraft servers</strong>, custom game systems,
+                            experimental world generation, bots, websites, and whatever
+                            else becomes interesting enough to build.
+                        </p>
 
-<script>
-async function loadAvatar(){
-document.getElementById("avatar").src="icon.png?v="+Date.now()
-}
-loadAvatar()
+                        <div class="mini-card">
+                            <span class="mini-label">Current status</span>
+                            <p>
+                                Probably debugging something that worked five minutes ago.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-const avatar=document.querySelector(".counting-icon")
-const MAX_TILT=20
-const MAX_DISTANCE=220
-let currentX=0
-let currentY=0
+            <section class="section reveal" style="--section-accent: var(--blue);">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <div class="section-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <path d="m12 3 2.3 4.7L19.5 9l-3.8 3.7.9 5.3-4.6-2.5L7.4 18l.9-5.3L4.5 9l5.2-1.3L12 3Z"></path>
+                            </svg>
+                        </div>
+                        <h2>My interests</h2>
+                    </div>
 
-document.addEventListener("mousemove",e=>{
-const rect=avatar.getBoundingClientRect()
-const cx=rect.left+rect.width/2
-const cy=rect.top+rect.height/2
+                    <div class="interests-grid">
+                        <article class="interest" style="--interest-color: var(--blue);">
+                            <span class="interest-symbol">◇</span>
+                            <h3>Minecraft</h3>
+                            <p>Servers, movement, PvP, world generation and strange mechanics.</p>
+                        </article>
 
-let dx=e.clientX-cx
-let dy=e.clientY-cy
-const distance=Math.sqrt(dx*dx+dy*dy)
+                        <article class="interest" style="--interest-color: var(--pink);">
+                            <span class="interest-symbol">✦</span>
+                            <h3>The mace</h3>
+                            <p>Possibly the most satisfying weapon Mojang has added.</p>
+                        </article>
 
-if(distance>MAX_DISTANCE){
-dx*=MAX_DISTANCE/distance
-dy*=MAX_DISTANCE/distance
-}
+                        <article class="interest" style="--interest-color: var(--cyan);">
+                            <span class="interest-symbol">◉</span>
+                            <h3>Wind charges</h3>
+                            <p>Movement tech, chaos, launches and very questionable decisions.</p>
+                        </article>
 
-const targetX=(-dy/MAX_DISTANCE)*MAX_TILT
-const targetY=(dx/MAX_DISTANCE)*MAX_TILT
+                        <article class="interest" style="--interest-color: var(--purple);">
+                            <span class="interest-symbol">&lt;/&gt;</span>
+                            <h3>Development</h3>
+                            <p>Java, Python, JavaScript, websites, plugins and desktop tools.</p>
+                        </article>
 
-currentX+=(targetX-currentX)*0.15
-currentY+=(targetY-currentY)*0.15
+                        <article class="interest" style="--interest-color: var(--yellow);">
+                            <span class="interest-symbol">⌁</span>
+                            <h3>Story worlds</h3>
+                            <p>Unusual dimensions, hidden lore and environments worth exploring.</p>
+                        </article>
 
-const scale=avatar.matches(":hover")?1.18:1
-avatar.style.transform=`perspective(600px) rotateX(${currentX}deg) rotateY(${currentY}deg) scale(${scale})`
-})
-</script>
-  
-<script>
-document.querySelectorAll(".lang-track span").forEach(el=>{
-  el.addEventListener("click",()=>{
-    const url=el.getAttribute("data-link")
-    window.open(url,"_blank")
-  })
-})
-</script>
+                        <article class="interest" style="--interest-color: var(--pink-light);">
+                            <span class="interest-symbol">▧</span>
+                            <h3>Design</h3>
+                            <p>Interfaces that feel handmade instead of copied from a template.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
 
+            <section class="section reveal" style="--section-accent: var(--purple);">
+                <div class="section-inner creator-panel">
+                    <div class="creator-copy">
+                        <div class="section-heading">
+                            <div class="section-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                    <path d="M8 5v14l11-7L8 5Z"></path>
+                                    <path d="M3 4v16"></path>
+                                </svg>
+                            </div>
+                            <h2>Content I like</h2>
+                        </div>
 
+                        <p>
+                            Wemmbu’s Minecraft content is one of the main inspirations:
+                            fast movement, strange strategies, ambitious server ideas and
+                            stories built from situations that should probably not work.
+                        </p>
+                    </div>
 
+                    <div class="creator-visual" aria-label="Stylized Wemmbu-inspired character">
+                        <div class="creator-ring"></div>
+                        <div class="creator-hat"></div>
+                        <div class="creator-face"></div>
+                    </div>
+                </div>
+            </section>
 
+            <section class="section reveal" style="--section-accent: var(--cyan);">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <div class="section-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <path d="M8 9 4 12l4 3"></path>
+                                <path d="m16 9 4 3-4 3"></path>
+                                <path d="m14 5-4 14"></path>
+                            </svg>
+                        </div>
+                        <h2>Things I use</h2>
+                    </div>
 
+                    <div class="tech-row">
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #f7d64a;"></span>
+                            JavaScript
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #8bc6ff;"></span>
+                            Python
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #ff986e;"></span>
+                            HTML
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #9abaff;"></span>
+                            CSS
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #ee889d;"></span>
+                            Java
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #9ef2e7;"></span>
+                            Skript
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-dot" style="--dot-color: #c99cff;"></span>
+                            Minecraft APIs
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            You reached the bottom of a page that was never supposed to exist.
+        </footer>
+    </div>
+
+    <script>
+        const stars = document.getElementById("stars");
+
+        for (let index = 0; index < 38; index++) {
+            const star = document.createElement("span");
+            star.className = "star";
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * -4}s`;
+            star.style.opacity = `${0.25 + Math.random() * 0.7}`;
+            star.style.transform = `scale(${0.5 + Math.random()})`;
+            stars.appendChild(star);
+        }
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            },
+            {
+                threshold: 0.14
+            }
+        );
+
+        document.querySelectorAll(".reveal").forEach(section => {
+            observer.observe(section);
+        });
+
+        document.addEventListener("mousemove", event => {
+            const x = event.clientX / window.innerWidth - 0.5;
+            const y = event.clientY / window.innerHeight - 0.5;
+            const scene = document.querySelector(".minecraft-scene");
+
+            if (scene && window.innerWidth > 900) {
+                scene.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+            }
+        });
+    </script>
 </body>
 </html>
