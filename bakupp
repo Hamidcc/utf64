@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utf8</title>
+<meta name="description" content="Utf8 portfolio">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --text: #111111;
+    --muted: #686868;
+    --line: #e9e9e9;
+    --surface: #ffffff;
+    --soft: #f7f7f7;
+    --shadow: 0 28px 70px rgba(15, 16, 30, 0.14);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    color: var(--text);
+    background: var(--surface);
+    font-family: "DM Sans", sans-serif;
+    overflow-x: hidden;
+}
+
+button,
+a {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.topbar-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    transform: none;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 68px;
+    padding: 10px 24px;
+    border: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.42);
+    border-radius: 0 0 18px 18px;
+    background: rgba(255,255,255,0.58);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: 0 16px 45px rgba(20,20,40,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.brand {
+    font-family: "Manrope", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav a {
+    padding: 10px 14px;
+    border-radius: 12px;
+    color: rgba(20,20,20,0.76);
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: 180ms ease;
+}
+
+.nav a:hover {
+    color: #111;
+    background: rgba(255,255,255,0.68);
+}
+
+.nav .nav-cta {
+    color: #fff;
+    background: #111;
+}
+
+.nav .nav-cta:hover {
+    color: #fff;
+    background: #262626;
+}
+
+.menu-button {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.72);
+    cursor: pointer;
+}
+
+.menu-button span,
+.menu-button span::before,
+.menu-button span::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 999px;
+    background: #111;
+    content: "";
+    transition: 180ms ease;
+}
+
+.menu-button span {
+    position: relative;
+    margin: auto;
+}
+
+.menu-button span::before {
+    position: absolute;
+    top: -6px;
+}
+
+.menu-button span::after {
+    position: absolute;
+    top: 6px;
+}
+
+.hero-shell {
+    height: 97vh;
+    min-height: 680px;
+    padding: 12px;
+}
+
+.hero {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 32px;
+    background:
+        linear-gradient(135deg, #3964ff 0%, #5f86ff 48%, #9fc3ff 100%);
+}
+
+.hero::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.2));
+    content: "";
+}
+
+.hero::after {
+    position: absolute;
+    inset: auto -10% -38% -10%;
+    height: 60%;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    filter: blur(55px);
+    content: "";
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 108px 24px 70px;
+    text-align: center;
+}
+
+.hero-copy {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    z-index: 9;
+    width: min(900px, calc(100% - 40px));
+    transform: translateX(-50%);
+    color: #fff;
+    text-shadow: 0 10px 35px rgba(0,0,0,0.28);
+}
+
+
+
+.hero h1 {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(3.25rem, 8vw, 7.5rem);
+    font-weight: 800;
+    letter-spacing: -0.075em;
+    line-height: 0.92;
+}
+
+.hero-copy p {
+    width: min(620px, 100%);
+    margin: 18px auto 0;
+    color: rgba(255,255,255,0.9);
+    font-size: clamp(1rem, 1.7vw, 1.22rem);
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.skin-stage {
+    position: absolute;
+    left: 50%;
+    bottom: -10%;
+    z-index: 5;
+    width: clamp(390px, 58vh, 700px);
+    aspect-ratio: 0.7;
+    transform: translateX(-50%);
+    perspective: 1000px;
+}
+
+.skin-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 420ms cubic-bezier(.2,.8,.2,1), filter 420ms ease;
+}
+
+.skin-card::before {
+    position: absolute;
+    inset: 13% 5% 4%;
+    z-index: -1;
+    border-radius: 50%;
+    background: rgba(39,45,79,0.25);
+    filter: blur(34px);
+    opacity: 0.75;
+    content: "";
+    transition: 420ms ease;
+}
+
+.skin-card::after {
+    position: absolute;
+    top: 5%;
+    left: -65%;
+    z-index: 4;
+    width: 38%;
+    height: 90%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.88), transparent);
+    filter: blur(5px);
+    opacity: 0;
+    transform: rotate(15deg);
+    content: "";
+    pointer-events: none;
+}
+
+.skin-card:hover {
+    transform: rotateY(-11deg) rotateX(3deg) scale(1.09);
+    filter: brightness(0.92) saturate(1.05) drop-shadow(0 28px 22px rgba(35,40,68,0.32));
+}
+
+.skin-card:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.skin-card:hover::after {
+    animation: glint 900ms ease forwards;
+}
+
+.skin-card:hover .skin-image {
+    filter:
+        drop-shadow(0 0 0.7px #fff)
+        drop-shadow(0 0 0.7px #fff)
+        drop-shadow(0 14px 22px rgba(0,0,0,0.28));
+}
+
+.skin-card:hover .shine {
+    opacity: 1;
+    transform: translateY(-7px) scaleX(1.08);
+}
+
+.skin-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: auto;
+    filter: blur(0.2px) drop-shadow(0 18px 18px rgba(0,0,0,0.18));
+    transition: filter 420ms ease;
+}
+
+.shine {
+    position: absolute;
+    top: 8%;
+    left: 22%;
+    z-index: 6;
+    width: 56%;
+    height: 7%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.94), rgba(255,255,255,0) 70%);
+    filter: blur(7px);
+    opacity: 0.2;
+    transition: 420ms ease;
+    pointer-events: none;
+}
+
+.scroll-cue {
+    position: absolute;
+    right: 28px;
+    bottom: 24px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(20,20,20,0.57);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.scroll-line {
+    width: 42px;
+    height: 1px;
+    background: currentColor;
+}
+
+main {
+    background: #fff;
+}
+
+.section {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 118px 0;
+}
+
+.section + .section {
+    border-top: 1px solid var(--line);
+}
+
+.section-heading {
+    max-width: 760px;
+    margin: 0 auto 56px;
+    text-align: center;
+}
+
+.section-heading span {
+    color: #8a8a8a;
+    font-size: 0.77rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.section-heading h2 {
+    margin: 10px 0 12px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.6rem);
+    font-weight: 800;
+    letter-spacing: -0.065em;
+    line-height: 1;
+}
+
+.section-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.04rem;
+    line-height: 1.7;
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+.work-card {
+    position: relative;
+    grid-column: span 4;
+    min-height: 340px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: var(--soft);
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.work-card:nth-child(1),
+.work-card:nth-child(4) {
+    grid-column: span 7;
+}
+
+.work-card:nth-child(2),
+.work-card:nth-child(3) {
+    grid-column: span 5;
+}
+
+.work-card:hover {
+    transform: translateY(-7px);
+    border-color: #d9d9d9;
+    box-shadow: var(--shadow);
+}
+
+.work-visual {
+    position: absolute;
+    inset: 0;
+    transition: transform 350ms ease;
+}
+
+.work-card:hover .work-visual {
+    transform: scale(1.035);
+}
+
+.visual-one {
+    background:
+        radial-gradient(circle at 20% 25%, rgba(255,255,255,0.8), transparent 22%),
+        linear-gradient(135deg, #c6b8ff, #79c7ff 52%, #a5f2dc);
+}
+
+.visual-two {
+    background:
+        radial-gradient(circle at 74% 28%, rgba(255,255,255,0.72), transparent 28%),
+        linear-gradient(145deg, #ffd9c5, #ffd482 48%, #f6a0b9);
+}
+
+.visual-three {
+    background:
+        radial-gradient(circle at 25% 72%, rgba(255,255,255,0.7), transparent 26%),
+        linear-gradient(145deg, #9fe7d0, #85bdff 58%, #9c8cff);
+}
+
+.visual-four {
+    background:
+        radial-gradient(circle at 74% 26%, rgba(255,255,255,0.74), transparent 22%),
+        linear-gradient(145deg, #d6c6ff, #ffbfdf 52%, #ffe3a1);
+}
+
+.mock-window {
+    position: absolute;
+    top: 52px;
+    left: 50%;
+    width: 78%;
+    height: 62%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.54);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.72);
+    box-shadow: 0 22px 50px rgba(36,44,75,0.2);
+    transform: translateX(-50%) rotate(-3deg);
+    backdrop-filter: blur(12px);
+}
+
+.mock-window::before {
+    display: block;
+    height: 26px;
+    background:
+        radial-gradient(circle at 13px 13px, #111 0 3px, transparent 4px),
+        radial-gradient(circle at 25px 13px, #777 0 3px, transparent 4px),
+        radial-gradient(circle at 37px 13px, #bbb 0 3px, transparent 4px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    content: "";
+}
+
+.mock-content {
+    display: grid;
+    grid-template-columns: 0.6fr 1.4fr;
+    gap: 12px;
+    height: calc(100% - 26px);
+    padding: 14px;
+}
+
+.mock-sidebar,
+.mock-panel,
+.mock-line {
+    border-radius: 9px;
+    background: rgba(20,20,20,0.08);
+}
+
+.mock-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 12px;
+}
+
+.mock-line {
+    height: 9px;
+}
+
+.mock-line:nth-child(2) {
+    width: 74%;
+}
+
+.mock-line:nth-child(3) {
+    width: 88%;
+}
+
+.mock-line:nth-child(4) {
+    width: 55%;
+}
+
+.work-overlay {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 3;
+    padding: 70px 24px 24px;
+    background: linear-gradient(to top, rgba(10,10,10,0.72), rgba(10,10,10,0));
+    color: #fff;
+}
+
+.work-tag {
+    display: inline-flex;
+    margin-bottom: 8px;
+    padding: 6px 9px;
+    border: 1px solid rgba(255,255,255,0.34);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+}
+
+.work-overlay h3 {
+    margin: 0 0 5px;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+}
+
+.work-overlay p {
+    margin: 0;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+}
+
+.experience-list {
+    max-width: 930px;
+    margin: 0 auto;
+}
+
+.experience-item {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    gap: 30px;
+    align-items: start;
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+}
+
+.experience-item:last-child {
+    border-bottom: 1px solid var(--line);
+}
+
+.experience-year {
+    color: #8c8c8c;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.experience-main h3 {
+    margin: 0 0 7px;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: -0.04em;
+}
+
+.experience-main p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.experience-type {
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--soft);
+    color: #666;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.skills-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.skill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 17px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 9px 24px rgba(10,10,10,0.04);
+    font-weight: 700;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.skill:hover {
+    transform: translateY(-3px);
+    border-color: #cbcbcb;
+    box-shadow: 0 15px 34px rgba(10,10,10,0.08);
+}
+
+.skill-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, #a78bfa, #67e8f9);
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.review {
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--soft);
+}
+
+.review p {
+    margin: 0 0 24px;
+    color: #2b2b2b;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    font-weight: 800;
+}
+
+.author-copy strong {
+    display: block;
+    font-size: 0.94rem;
+}
+
+.author-copy span {
+    color: #858585;
+    font-size: 0.82rem;
+}
+
+.contact-panel {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+    padding: 46px;
+    border-radius: 30px;
+    background: #111;
+    color: #fff;
+}
+
+.contact-panel h2 {
+    margin: 0 0 12px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    letter-spacing: -0.065em;
+    line-height: 1;
+}
+
+.contact-panel p {
+    max-width: 610px;
+    margin: 0;
+    color: rgba(255,255,255,0.63);
+    line-height: 1.7;
+}
+
+.contact-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contact-actions a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 17px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 15px;
+    background: rgba(255,255,255,0.07);
+    transition: 180ms ease;
+}
+
+.contact-actions a:hover {
+    background: rgba(255,255,255,0.13);
+    transform: translateX(4px);
+}
+
+.contact-actions span {
+    color: rgba(255,255,255,0.55);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 28px 0 40px;
+    color: #747474;
+    font-size: 0.86rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 8px;
+}
+
+.footer-links a {
+    padding: 8px 11px;
+    border-radius: 10px;
+    transition: 180ms ease;
+}
+
+.footer-links a:hover {
+    color: #111;
+    background: var(--soft);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 650ms ease, transform 650ms ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes glint {
+    0% {
+        left: -65%;
+        opacity: 0;
+    }
+    22% {
+        opacity: 0.9;
+    }
+    100% {
+        left: 125%;
+        opacity: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-copy {
+        top: 17%;
+    }
+
+    .work-card,
+    .work-card:nth-child(1),
+    .work-card:nth-child(2),
+    .work-card:nth-child(3),
+    .work-card:nth-child(4) {
+        grid-column: span 6;
+    }
+
+    .experience-item {
+        grid-template-columns: 110px 1fr;
+    }
+
+    .experience-type {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .topbar-wrap {
+        top: 0;
+        width: 100%;
+    }
+
+    .topbar {
+        min-height: 58px;
+        border-radius: 0 0 16px 16px;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .nav {
+        position: absolute;
+        top: 68px;
+        right: 0;
+        display: none;
+        width: 210px;
+        padding: 10px;
+        border: 1px solid rgba(255,255,255,0.5);
+        border-radius: 16px;
+        background: rgba(255,255,255,0.83);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+    }
+
+    .nav.open {
+        display: grid;
+    }
+
+    .nav a {
+        display: block;
+    }
+
+    .hero-shell {
+        min-height: 650px;
+        padding: 7px;
+    }
+
+    .hero {
+        border-radius: 24px;
+    }
+
+    .hero-copy {
+        top: 19%;
+    }
+
+    .hero-copy p {
+        font-size: 0.95rem;
+    }
+
+    .skin-stage {
+        bottom: -1%;
+        width: clamp(260px, 39vh, 390px);
+    }
+
+    .scroll-cue {
+        display: none;
+    }
+
+    .section {
+        width: min(100% - 26px, 1160px);
+        padding: 82px 0;
+    }
+
+    .section-heading {
+        margin-bottom: 38px;
+    }
+
+    .work-grid {
+        gap: 14px;
+    }
+
+    .work-card,
+    .work-card:nth-child(1),
+    .work-card:nth-child(2),
+    .work-card:nth-child(3),
+    .work-card:nth-child(4) {
+        grid-column: 1 / -1;
+        min-height: 315px;
+    }
+
+    .experience-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .experience-type {
+        grid-column: 1;
+    }
+
+    .contact-panel {
+        padding: 30px 22px;
+        border-radius: 24px;
+    }
+
+    .footer {
+        flex-direction: column;
+        width: calc(100% - 28px);
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.simple-experience .experience-item {
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.review-slider {
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.review-track {
+    display: flex;
+    width: max-content;
+    gap: 18px;
+    animation: reviewScroll 28s linear infinite;
+}
+
+.review-slider:hover .review-track {
+    animation-play-state: paused;
+}
+
+.review-slide {
+    width: min(360px, 82vw);
+    min-height: 210px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 14px 35px rgba(0,0,0,0.06);
+}
+
+.review-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.review-top img {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    image-rendering: auto;
+}
+
+.review-top strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+.review-top span {
+    color: #ff9f1a;
+    letter-spacing: 0.08em;
+}
+
+.review-slide p {
+    margin: 0;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+@keyframes reviewScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-50% - 9px));
+    }
+}
+
+
+.experience-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+.experience-card {padding:26px;border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.04);transition:transform 180ms ease,box-shadow 180ms ease,border-color 180ms ease;}
+.experience-card:hover {transform:translateY(-5px);border-color:#ccc;box-shadow:0 20px 45px rgba(0,0,0,.08);}
+.experience-card.featured {grid-column:span 2;background:linear-gradient(135deg,#f7f9ff,#eef4ff);}
+.experience-card-top {display:flex;justify-content:space-between;gap:16px;margin-bottom:28px;color:#868686;font-size:.78rem;font-weight:700;}
+.experience-badge {color:#2957e8;text-transform:uppercase;letter-spacing:.09em;}
+.experience-card h3 {margin:0 0 6px;font-family:"Manrope",sans-serif;font-size:1.35rem;letter-spacing:-.04em;}
+.experience-card h4 {margin:0 0 14px;color:#4f67b8;font-size:.86rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;}
+.experience-card p {margin:0;color:var(--muted);line-height:1.65;}
+.skills-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.skill-square {display:flex;aspect-ratio:1;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:22px;border:1px solid var(--line);border-radius:22px;background:#fff;text-align:center;box-shadow:0 10px 28px rgba(0,0,0,.04);transition:transform 180ms ease,box-shadow 180ms ease,border-color 180ms ease;}
+.skill-square:hover {transform:translateY(-6px);border-color:#c7c7c7;box-shadow:0 18px 42px rgba(0,0,0,.09);}
+.skill-square img {width:54px;height:54px;object-fit:contain;}
+.skill-square .java-icon {filter: grayscale(1) brightness(0);}
+.skill-square span {font-family:"Manrope",sans-serif;font-size:.95rem;font-weight:800;letter-spacing:-.025em;}
+@media (max-width:900px){.skills-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:700px){.experience-row{grid-template-columns:1fr;gap:10px}.experience-members,.experience-role{text-align:left}.hero-copy{top:25%;}.skin-stage{bottom:-8%;width:clamp(330px,52vh,530px);}.experience-grid{grid-template-columns:1fr;}.experience-card.featured{grid-column:span 1;}.skills-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.skill-square{border-radius:18px;padding:18px;}.skill-square img{width:45px;height:45px;}}
+
+
+body {
+    font-family: "DM Sans", sans-serif;
+}
+
+.brand,
+.hero h1,
+.section-heading h2,
+.experience-copy h3,
+.skill-square span,
+.contact-panel h2 {
+    font-family: "DM Sans", sans-serif;
+}
+
+.section-heading span,
+.experience-role,
+.experience-badge,
+.experience-card h4 {
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.experience-showcase {
+    max-width: 1040px;
+    margin: 0 auto;
+    border-top: 1px solid var(--line);
+}
+
+.experience-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px minmax(210px, auto);
+    gap: 26px;
+    align-items: center;
+    padding: 25px 4px;
+    border-bottom: 1px solid var(--line);
+    transition: padding 180ms ease, background 180ms ease;
+}
+
+.experience-row:hover {
+    padding-right: 14px;
+    padding-left: 14px;
+    background: #fafafa;
+}
+
+.experience-mark,
+.primary-row .experience-mark {
+    display: none;
+}
+
+.experience-copy h3 {
+    margin: 0 0 6px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.experience-copy p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.experience-members {
+    color: #111;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.experience-members small {
+    display: block;
+    margin-top: 3px;
+    color: #8a8a8a;
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+.experience-role {
+    color: #4f4f4f;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.experience-more {
+    display: none;
+}
+
+.experience-more.open {
+    display: block;
+}
+
+.more-experience-button {
+    display: block;
+    margin: 26px auto 0;
+    padding: 12px 18px;
+    border: 1px solid #d8d8d8;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 180ms ease;
+}
+
+.more-experience-button:hover {
+    border-color: #111;
+    transform: translateY(-2px);
+}
+
+.footer-link-button {
+    padding: 8px 11px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.footer-link-button:hover {
+    color: #111;
+    background: var(--soft);
+}
+
+.legal-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    place-items: center;
+    padding: 20px;
+}
+
+.legal-modal.open {
+    display: grid;
+}
+
+.legal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 12, 20, 0.64);
+    backdrop-filter: blur(14px);
+}
+
+.legal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(720px, 100%);
+    max-height: min(760px, calc(100vh - 40px));
+    overflow: auto;
+    padding: 42px;
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 26px;
+    background: #fff;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.3);
+}
+
+.legal-panel > span {
+    color: #737373;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.legal-panel h2 {
+    margin: 8px 0 22px;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    letter-spacing: -0.055em;
+}
+
+.legal-panel p {
+    margin: 0 0 16px;
+    color: #4d4d4d;
+    line-height: 1.75;
+}
+
+.legal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 700px) {
+    .experience-row {
+        grid-template-columns: 48px minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .experience-role {
+        grid-column: 2;
+        text-align: left;
+    }
+
+    .legal-panel {
+        padding: 34px 22px 24px;
+        border-radius: 20px;
+    }
+}
+
+</style>
+</head>
+<body>
+<div class="topbar-wrap">
+    <header class="topbar">
+        <a href="#home" class="brand">Utf8</a>
+        <button class="menu-button" id="menuButton" aria-label="Open navigation">
+            <span></span>
+        </button>
+        <nav class="nav" id="nav">
+                        <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact" class="nav-cta">Contact</a>
+        </nav>
+    </header>
+</div>
+
+<section class="hero-shell" id="home">
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-copy">
+                <h1>@utf8</h1>
+                <p>Whats up! I'm utf, I develop things. I'm mostly interested in Minecraft and Discord, but I do also check out other platforms. I'm CST, in NA. You can mostly contact me from 8 AM to 11 PM</p>
+            </div>
+
+            <div class="skin-stage" id="skinStage">
+                <div class="skin-card" id="skinCard">
+                    <img class="skin-image" src="https://mc-heads.net/body/utf64/left" alt="Utf64 Minecraft skin">
+                    <div class="shine"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main>
+
+    <section class="section reveal" id="experience">
+        <div class="section-heading">
+            <span>Community work</span>
+            <h2>My experience with Discord</h2>
+        </div>
+
+        <div class="experience-showcase" id="experienceShowcase">
+            <article class="experience-row primary-row">
+                <div class="experience-copy">
+                    <h3>Unstable Universe Fan Discord</h3>
+                    <p>Developer and moderator for a fam community around Unstable Universe.</p>
+                </div>
+                <span class="experience-members">79,857<small>members</small></span>
+                <span class="experience-role">Developer & Moderator</span>
+            </article>
+
+            <article class="experience-row">
+                <div class="experience-copy">
+                    <h3>Unstable HMP</h3>
+                    <p>Administration, development, moderation, and community management for a large Minecraft server.</p>
+                </div>
+                <span class="experience-members">7,215<small>members</small></span>
+                <span class="experience-role">Administrator & Developer & Moderator</span>
+            </article>
+
+            <article class="experience-row">
+                <div class="experience-copy">
+                    <h3>ParrotX2 Community</h3>
+                    <p>A fan community for the creator ParrotX2</p>
+                </div>
+                <span class="experience-members">15,617<small>members</small></span>
+                <span class="experience-role">Administrator & Manager & Developer & Moderator</span>
+            </article>
+
+            <article class="experience-row">
+                <div class="experience-copy">
+                    <h3>Unstable Analysis</h3>
+                    <p>Administration, development, moderation, and community management for an Unstable SMP theory community.</p>
+                </div>
+                <span class="experience-members">7,610<small>members</small></span>
+                <span class="experience-role">Administrator & Developer & Moderator</span>
+            </article>
+
+            <div class="experience-more" id="experienceMore">
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>r/Unstable_Universe</h3>
+                        <p>The official discord server for the r/Unstable_Universe reddit</p>
+                    </div>
+                <span class="experience-members">701<small>members</small></span>
+                <span class="experience-role">Manager & Moderator</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>Unstable Network</h3>
+                        <p>A Minecraft server around Unstable SMP.</p>
+                    </div>
+                <span class="experience-members">6,733<small>members</small></span>
+                <span class="experience-role">Administrator & Developer</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>Connected Studios</h3>
+                        <p>Development, administration, etc.</p>
+                    </div>
+                <span class="experience-members">792<small>members</small></span>
+                <span class="experience-role">Administrator & Developer</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>Swifr's Savvannah</h3>
+                        <p>Moderation until the community was discontinued.</p>
+                    </div>
+                <span class="experience-members">100<small>members</small></span>
+                <span class="experience-role">Moderator</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>Tempest SMP</h3>
+                        <p>Founded and operated a Minecraft community, SMP, and fan server that went through numerous rebrands which reached approximately 850 members.</p>
+                    </div>
+                <span class="experience-members">850<small>members</small></span>
+                <span class="experience-role">Owner</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>SpruceTop SMP</h3>
+                        <p>Founded and managed the server, staff, community, and SMP.</p>
+                    </div>
+                <span class="experience-members">28<small>members</small></span>
+                <span class="experience-role">Owner</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>Minecraft Return</h3>
+                        <p>Founded and managed a Minecraft community centered on building, parkour, and redstone.</p>
+                    </div>
+                <span class="experience-members">23<small>members</small></span>
+                <span class="experience-role">Owner</span>
+                </article>
+
+                <article class="experience-row">
+                <div class="experience-copy">
+                        <h3>Mr. NoName's Hangout</h3>
+                        <p>Content Creator's hang out Discord server.</p>
+                    </div>
+                <span class="experience-members">4,058<small>members</small></span>
+                <span class="experience-role">Unofficial Manager</span>
+                </article>
+            </div>
+
+            <button class="more-experience-button" id="moreExperienceButton" type="button">More experience</button>
+        </div>
+    </section>
+
+    <section class="section reveal" id="skills">
+        <div class="section-heading">
+            <span>Technology and operations</span>
+            <h2>What I know</h2>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-square"><img src="https://avatars.githubusercontent.com/u/39464898?v=4" alt="Skript"><span>Minecraft Skript</span></div>
+            <div class="skill-square"><img class="java-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/python/111111" alt="Python"><span>Python</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/nodedotjs/111111" alt="Node.js"><span>Node.js</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/javascript/111111" alt="JavaScript"><span>JavaScript</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/html5/111111" alt="HTML"><span>HTML</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/css/111111" alt="CSS"><span>CSS</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/robloxstudio/111111" alt="Luau"><span>Luau</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/react/111111" alt="JSX"><span>JSX / React</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/discord/111111" alt="Discord"><span>Discord Administration</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/element/111111" alt="Community"><span>Community Management</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/youtube/111111" alt="Content Creation"><span>Content Creation</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/pcgamingwiki/111111" alt="PC Building"><span>PC Building</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/git/111111" alt="Git"><span>Git</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/linux/111111" alt="Linux"><span>Linux</span></div>
+            <div class="skill-square"><img src="https://cdn.simpleicons.org/ffmpeg/111111" alt="FFmpeg"><span>FFmpeg</span></div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="reviews">
+        <div class="section-heading">
+            <span>Feedback</span>
+            <h2>Reviews</h2>
+            <p>Add reviews by duplicating a card and changing the avatar, username, stars, and comment.</p>
+        </div>
+
+        <div class="review-slider">
+            <div class="review-track">
+                <article class="review-slide">
+                    <div class="review-top">
+                        <img src="https://mc-heads.net/avatar/Steve/64" alt="Reviewer profile">
+                        <div>
+                            <strong>@Northnado</strong>
+                            <span>★★★★★</span>
+                        </div>
+                    </div>
+                    <p>“very skilled at aspect of Roblox development, great to work with.”</p>
+                </article>
+        </div>
+    </section>
+
+    <section class="section reveal" id="contact">
+        <div class="contact-panel">
+            <div>
+                <h2>Contact support</h2>
+                <p>For project questions, technical support, collaboration requests, or development work, use one of the contact options.</p>
+            </div>
+            <div class="contact-actions">
+                <a href="mailto:info@utf64.com">
+                    <strong>Email</strong>
+                    <span>info@utf64.com →</span>
+                </a>
+                <a href="https://discord.gg/sZbXTpgUEq" target="_blank" rel="noopener noreferrer">
+                    <strong>Discord</strong>
+                    <span>Join support server →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <span>© <span id="year"></span> Utf8. All rights reserved.</span>
+    <div class="footer-links">
+        <button class="footer-link-button" type="button" data-legal-open="privacyModal">Privacy policy</button>
+        <button class="footer-link-button" type="button" data-legal-open="termsModal">Terms</button>
+        <a href="https://discord.gg/sZbXTpgUEq" target="_blank" rel="noopener noreferrer">Contact support</a>
+    </div>
+</footer>
+
+<div class="legal-modal" id="privacyModal" aria-hidden="true">
+    <div class="legal-backdrop" data-legal-close></div>
+    <section class="legal-panel" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+        <button class="legal-close" type="button" data-legal-close aria-label="Close">×</button>
+        <span>Legal</span>
+        <h2 id="privacyTitle">Privacy policy</h2>
+        <p>coming soon ig.</p>
+    </section>
+</div>
+
+<div class="legal-modal" id="termsModal" aria-hidden="true">
+    <div class="legal-backdrop" data-legal-close></div>
+    <section class="legal-panel" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+        <button class="legal-close" type="button" data-legal-close aria-label="Close">×</button>
+        <span>Legal</span>
+        <h2 id="termsTitle">Terms of use</h2>
+        <p>coming soon ig.</p>
+    </section>
+</div>
+
+
+<script>
+const menuButton = document.getElementById("menuButton");
+const nav = document.getElementById("nav");
+const skinStage = document.getElementById("skinStage");
+const skinCard = document.getElementById("skinCard");
+const reveals = document.querySelectorAll(".reveal");
+
+menuButton.addEventListener("click", () => {
+    nav.classList.toggle("open");
+});
+
+nav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        nav.classList.remove("open");
+    });
+});
+
+skinStage.addEventListener("mousemove", event => {
+    const rect = skinStage.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    skinCard.style.transform = `rotateY(${x * 18}deg) rotateX(${y * -10}deg) scale(1.09)`;
+});
+
+skinStage.addEventListener("mouseleave", () => {
+    skinCard.style.transform = "";
+});
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.13
+});
+
+reveals.forEach(element => observer.observe(element));
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const moreExperienceButton = document.getElementById("moreExperienceButton");
+const experienceMore = document.getElementById("experienceMore");
+
+moreExperienceButton.addEventListener("click", () => {
+    const isOpen = experienceMore.classList.toggle("open");
+    moreExperienceButton.textContent = isOpen ? "Show less" : "More experience";
+});
+
+document.querySelectorAll("[data-legal-open]").forEach(button => {
+    button.addEventListener("click", () => {
+        const modal = document.getElementById(button.dataset.legalOpen);
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+    });
+});
+
+const closeLegalModal = modal => {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+};
+
+document.querySelectorAll("[data-legal-close]").forEach(button => {
+    button.addEventListener("click", () => closeLegalModal(button.closest(".legal-modal")));
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        document.querySelectorAll(".legal-modal.open").forEach(closeLegalModal);
+    }
+});
+
+</script>
+</body>
+</html>
