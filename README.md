@@ -3,4 +3,4 @@
 
 ---
 
-The netlify site is currently blocked by netlify for possible copyright infringement, I am working on getting it fixed. In the mean time, you can download and open the index HTML file locally, no additional files needed.
+The netlify site is currently blocked by netlify for possible copyright infringement, even though it is completely original. I've temporarily transferred to a slower service.
